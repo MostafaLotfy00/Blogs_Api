@@ -8,6 +8,7 @@ class ApiResponse{
         $response=[
             'status'=> $code,
             'message'=> $message,
+            'length' => is_countable($data)? count($data):1,
             'data'=>$data
         ];
 

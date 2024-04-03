@@ -58,7 +58,7 @@ class AuthController extends Controller
             return ApiResponse::sendResponse(401,"Invalid Email or Password",null);
         }
 
-        $currentUser= Auth::user();
+        $currentUser= User::find(Auth::user()->id);
         $data['token']= $currentUser->createToken('blog')->plainTextToken;
         $data['name']= $currentUser->name;
         $data['email']= $currentUser->email;
