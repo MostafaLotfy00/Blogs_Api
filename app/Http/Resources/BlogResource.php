@@ -15,11 +15,14 @@ class BlogResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'name'=> $this->name,
             'description'=> $this->description,
             'image'=> $this->image,
-            'user'=> $this->user->name,
+            'user_name'=> $this->user->name,
+            'user_email'=> $this->user->email,
             'category'=> $this->category->name,
+            'comments' => CommentResource::collection($this->comments)
         ];
     }
 }

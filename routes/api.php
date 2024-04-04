@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\SubscribeController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +30,8 @@ Route::controller(AuthController::class)->group(function(){
     Route::post('/login','login');
     Route::post('/logout','logout')->middleware('auth:sanctum');
 });
-
+# USER MODULE
+Route::get('/users/{user_id?}',[UserController::class,'getAll']);
 # SUBSCRIBE MODULE
 Route::controller(SubscribeController::class)->group(function(){
     Route::post('/subscribe','create');
@@ -42,8 +46,16 @@ Route::controller(CategoryController::class)->group(function(){
 });
 
 # BLOG MODULE
-Route::controller(CategoryController::class)->group(function(){
-    Route::get('/categories','getCategories');
+Route::controller(BlogController::class)->group(function(){
+    Route::post('/blog','create')->middleware('auth:sanctum');
+    Route::get('/blogs/{blog_id?}','getAll');
+    
+});
+
+# COMMENT MODULE
+Route::controller(CommentController::class)->group(function(){
+ Route::post('comment', 'create')->middleware('auth:sanctum');
+ Route::get('comments/{blog_id}', 'getAll');
 });
 
 
